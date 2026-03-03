@@ -22,7 +22,7 @@ public class AlignAndDistribute : EditorWindow
     private List<Vector3> previewPositions = new List<Vector3>();
 
     [MenuItem("Tools/Align and Distribute Objects")]
-    public static void ShowWindow() => GetWindow<AlignAndDistribute>("Align & Distribute");
+    public static void ShowWindow() => GetWindow<AlignAndDistribute>("Align & Distribute V1.0.2");
 
     private void OnEnable() => SceneView.duringSceneGui += OnSceneGUI;
     private void OnDisable() => SceneView.duringSceneGui -= OnSceneGUI;
@@ -71,41 +71,57 @@ public class AlignAndDistribute : EditorWindow
             GameObject go = obj as GameObject;
             if (go == null) continue;
 
-            // Prefab asset in Project tab
+            // Handle prefab assets
             if (PrefabUtility.IsPartOfPrefabAsset(go))
             {
-                for (int i = 0; i < (duplicateObjects ? duplicateCount : 1); i++)
+                if (duplicateObjects)
                 {
-                    GameObject dup = (GameObject)PrefabUtility.InstantiatePrefab(go); // Linked prefab instance
-                    if (dup != null)
+                    for (int i = 0; i < duplicateCount; i++)
                     {
-                        dup.name = go.name + (duplicateObjects ? "_" + i : "");
-                        Undo.RegisterCreatedObjectUndo(dup, "Duplicate Prefab");
-
-                        // Assign parent after instantiation to preserve prefab link
-                        if (Selection.activeTransform != null)
-                            dup.transform.SetParent(Selection.activeTransform.parent, true);
-
+                        GameObject dup = (GameObject)PrefabUtility.InstantiatePrefab(go);
+                        if (dup != null)
+                        {
+                            dup.name = go.name + "_" + i;
+                            Undo.RegisterCreatedObjectUndo(dup, "Duplicate Prefab");
+                            if (Selection.activeTransform != null)
+                                dup.transform.SetParent(Selection.activeTransform.parent, true);
+                            targets.Add(dup.transform);
+                        }
+                    }
+                }
+                else
+                {
+                    // Single instance for layout without duplication
+                    GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(go);
+                    Undo.RegisterCreatedObjectUndo(instance, "Add Prefab Instance");
+                    if (Selection.activeTransform != null)
+                        instance.transform.SetParent(Selection.activeTransform.parent, true);
+                    targets.Add(instance.transform);
+                }
+            }
+            // Handle scene objects
+            else if (go.scene.IsValid())
+            {
+                if (duplicateObjects)
+                {
+                    for (int i = 0; i < duplicateCount; i++)
+                    {
+                        GameObject dup = Object.Instantiate(go, go.transform.position, go.transform.rotation, go.transform.parent);
+                        dup.name = go.name + "_" + i;
+                        Undo.RegisterCreatedObjectUndo(dup, "Duplicate Scene Object");
                         targets.Add(dup.transform);
                     }
                 }
-            }
-            // Scene object in Hierarchy
-            else if (go.scene.IsValid())
-            {
-                for (int i = 0; i < (duplicateObjects ? duplicateCount : 1); i++)
+                else
                 {
-                    GameObject dup = Object.Instantiate(go, go.transform.position, go.transform.rotation, go.transform.parent);
-                    dup.name = go.name + (duplicateObjects ? "_" + i : "");
-                    Undo.RegisterCreatedObjectUndo(dup, "Duplicate Scene Object");
-                    targets.Add(dup.transform);
+                    targets.Add(go.transform);
                 }
             }
         }
 
         if (targets.Count == 0)
         {
-            EditorUtility.DisplayDialog("Error", "No valid objects or prefabs to duplicate.", "OK");
+            EditorUtility.DisplayDialog("Error", "No valid objects or prefabs to process.", "OK");
             return;
         }
 
