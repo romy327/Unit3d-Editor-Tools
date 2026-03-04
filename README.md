@@ -4,18 +4,17 @@ A lightweight Unity Editor extension for arranging selected objects in a straigh
 
 ---
 
-## **Watch Demo**
+<img width="346" height="255" alt="image" src="https://github.com/user-attachments/assets/a56349fb-74f4-4a24-9982-7cfc18cc6c6c" />
 
-\<p align="center"\> \<iframe width="578" height="325" src="https://www.youtube.com/embed/DhUNwZC0DRw" title="AlignAndDistributionV1 0 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen\>\</iframe\> \</p\>
 
 ---
 
 ## **Download**
 
-\<p align="center"\> \<a href="https://github.com/romy327/Unit3d-Editor-Tools/raw/refs/heads/main/Assets/Packages/AlignAndDistributionV1.0.2.unitypackage?download="\> \<img src="https://img.shields.io/badge/Download-UnityPackage-brightgreen?style=for-the-badge\&logo=unity" /\> \</a\> \</p\>
+<p align="left"> <a href="https://github.com/romy327/Unit3d-Editor-Tools/raw/refs/heads/main/Assets/Packages/AlignAndDistributionV1.0.2.unitypackage?download="> <img src="https://img.shields.io/badge/Download-UnityPackage-brightgreen?style=for-the-badge\&logo=unity" > </a> </p\>
 
 ---
 
 ## **Web Page**
 
-\<p align="center"\> \<a href="https://romyrmichael.c1.biz/AlignAndDistribution.php"\> \<img src="https://img.shields.io/badge/Visit-WebPage-blue?style=for-the-badge\&logo=internet-explorer" /\> \</a\> \</p\> 
+<p align="left"> <a href="https://romyrmichael.c1.biz/AlignAndDistribution.php"> <img src="https://img.shields.io/badge/Visit-WebPage-blue?style=for-the-badge\&logo=internet-explorer" /> </a> </p> 
