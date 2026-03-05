@@ -3,14 +3,14 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 
 [InitializeOnLoad]
-public class CrosshairEditor : MonoBehaviour
+public class AutoSaveAndCrosshair : MonoBehaviour
 {
     private static bool showCrosshair = false; // Default to off
     private static bool enableAutoSave = false; // Default to off
     private static float saveInterval = 60f; // Default save interval in seconds
     private static float nextSaveTime = 0f;
 
-    static CrosshairEditor()
+    static AutoSaveAndCrosshair()
     {
         SceneView.duringSceneGui += OnSceneGUI;
         EditorApplication.update += Update;
