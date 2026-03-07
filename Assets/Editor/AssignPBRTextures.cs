@@ -247,6 +247,7 @@ public class AssignPBRTexturesV5 : EditorWindow
         else
         {
             mat.DisableKeyword("_EMISSION");
+            mat.SetTexture("_EmissionMap", null);
             mat.SetColor("_EmissionColor", Color.black);
             mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
         }
