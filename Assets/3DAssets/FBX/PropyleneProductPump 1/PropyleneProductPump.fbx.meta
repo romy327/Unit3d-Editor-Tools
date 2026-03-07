@@ -3,7 +3,17 @@ guid: 292791e7c41731b4ca24e694be719c6b
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PropyleneProductPump_
+    second: {fileID: 2100000, guid: b828cfe74683a434598c4d037c8759a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mesh
+    second: {fileID: 2100000, guid: 8fd1a684a62efa14796187f3fc135056, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
