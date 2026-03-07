@@ -27,41 +27,84 @@ public class AssignPBRTexturesV5 : EditorWindow
 
     void OnGUI()
     {
+        GUIStyle titleStyle = new GUIStyle(EditorStyles.boldLabel);
+        titleStyle.fontSize = 18;
+        titleStyle.normal.textColor = new Color(0.3f, 0.9f, 1f);
+        titleStyle.alignment = TextAnchor.MiddleCenter;
+
         GUILayout.Space(10);
-        GUILayout.Label("Auto Assign PBR Textures V5", EditorStyles.boldLabel);
+        GUILayout.Label("AUTO ASSIGN PBR TEXTURES PRO", titleStyle);
+        GUILayout.Space(10);
+
+        EditorGUILayout.BeginVertical("box");
+
+        GUILayout.Label("Texture Source", EditorStyles.boldLabel);
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Texture Folder", GUILayout.Width(100));
-        textureFolderPath = EditorGUILayout.TextField(textureFolderPath);
 
-        if (GUILayout.Button("...", GUILayout.Width(30)))
+        textureFolderPath = EditorGUILayout.TextField("Texture Folder", textureFolderPath);
+
+        if (GUILayout.Button("Browse", GUILayout.Width(70)))
         {
             string selected = EditorUtility.OpenFolderPanel("Select Texture Folder", "Assets", "");
 
             if (selected.StartsWith(Application.dataPath))
+            {
                 textureFolderPath = "Assets" + selected.Substring(Application.dataPath.Length);
+            }
+            else
+            {
+                Debug.LogWarning("Folder must be inside Assets.");
+            }
         }
 
         EditorGUILayout.EndHorizontal();
 
         namingSource = (NamingSource)EditorGUILayout.EnumPopup("Texture Match By", namingSource);
 
-        mergeAlbedoAOToEmission = EditorGUILayout.Toggle("Merge Albedo+AO → Emission", mergeAlbedoAOToEmission);
+        EditorGUILayout.EndVertical();
+
+        GUILayout.Space(8);
+
+        EditorGUILayout.BeginVertical("box");
+
+        GUILayout.Label("Emission Generator (AO + Albedo)", EditorStyles.boldLabel);
+
+        mergeAlbedoAOToEmission = EditorGUILayout.Toggle("Merge Albedo + AO → Emission", mergeAlbedoAOToEmission, GUILayout.Width(100));
 
         if (mergeAlbedoAOToEmission)
         {
             mergedSuffix = EditorGUILayout.TextField("Merged Suffix", mergedSuffix);
-            aoOpacity = EditorGUILayout.Slider("AO Opacity", aoOpacity, 0, 1);
+            aoOpacity = EditorGUILayout.Slider("AO Opacity", aoOpacity, 0f, 1f);
             selectedBlendMode = EditorGUILayout.Popup("Blend Mode", selectedBlendMode, blendModes);
         }
 
-        GUILayout.Space(10);
+        EditorGUILayout.EndVertical();
 
-        if (GUILayout.Button("Assign Textures to Selected"))
+        GUILayout.Space(12);
+
+        GUI.backgroundColor = new Color(0.3f, 0.8f, 0.3f);
+
+        if (GUILayout.Button("ASSIGN TEXTURES TO SELECTED OBJECTS", GUILayout.Height(40)))
         {
             BuildTextureCache(textureFolderPath);
             AssignTexturesToSelected();
         }
+
+        GUI.backgroundColor = Color.white;
+
+        GUILayout.Space(8);
+
+        EditorGUILayout.HelpBox(
+            "Select GameObjects or Materials in the hierarchy or project window.\n" +
+            "Textures will be automatically assigned based on name matching.",
+            MessageType.Info
+        );
+
+        GUILayout.Space(5);
+
+        EditorGUILayout.LabelField("Supported Maps:",
+            "AlbedoTransparency, AO, Normal, MetallicSmoothness, Emmision");
     }
 
     static void BuildTextureCache(string folder)
@@ -154,7 +197,6 @@ public class AssignPBRTexturesV5 : EditorWindow
 
         bool isURP = shader.Contains("Universal");
         bool isHDRP = shader.Contains("HDRP");
-        bool isStandard = shader.Contains("Standard");
 
         if (albedo)
         {
@@ -245,7 +287,6 @@ public class AssignPBRTexturesV5 : EditorWindow
         string name = Path.GetFileNameWithoutExtension(path);
 
         string newFile = name + mergedSuffix + ".jpg";
-
         string newPath = Path.Combine(dir, newFile);
 
         File.WriteAllBytes(newPath, tex.EncodeToJPG());
