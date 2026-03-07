@@ -191,10 +191,10 @@ public class AssignPBRTexturesV5 : EditorWindow
         Texture2D ao = FindTexture(baseName, "ao");
         Texture2D normal = FindTexture(baseName, "normal");
         Texture2D metallic = FindTexture(baseName, "metallicsmoothness");
-        Texture2D emission = FindTexture(baseName, "emmision");
+        // do NOT auto-load existing emission textures here
+        Texture2D emission = null;
 
         string shader = mat.shader.name;
-
         bool isURP = shader.Contains("Universal");
         bool isHDRP = shader.Contains("HDRP");
 
@@ -224,36 +224,32 @@ public class AssignPBRTexturesV5 : EditorWindow
             mat.EnableKeyword("_OCCLUSIONMAP");
         }
 
-        if (mergeAlbedoAOToEmission && albedo && ao)
+        // Emission only when merging AO + Albedo is explicitly enabled
+        bool shouldEnableEmission = false;
+        if (mergeAlbedoAOToEmission && albedo != null && ao != null)
         {
             Texture2D merged = MergeTextures(albedo, ao);
-
             string save = SaveMergedTexture(merged, albedo);
             emission = AssetDatabase.LoadAssetAtPath<Texture2D>(save);
+            shouldEnableEmission = emission != null;
         }
 
-        // Updated Emission Logic
-        if (emission)
+        if (shouldEnableEmission)
         {
             mat.SetTexture("_EmissionMap", emission);
             mat.SetColor("_EmissionColor", Color.white);
-
-            // This enables the emission keyword for the shader
             mat.EnableKeyword("_EMISSION");
-
-            // This sets the Global Illumination flags so Unity knows the emission is active
             mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
         }
         else
         {
-            mat.DisableKeyword("_EMISSION");
             mat.SetTexture("_EmissionMap", null);
             mat.SetColor("_EmissionColor", Color.black);
+            mat.DisableKeyword("_EMISSION");
             mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
         }
 
         EditorUtility.SetDirty(mat);
-
         Debug.Log("Assigned textures → " + mat.name);
     }
 
