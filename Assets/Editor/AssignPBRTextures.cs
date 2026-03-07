@@ -10,7 +10,7 @@ public class AssignPBRTexturesV5 : EditorWindow
     private enum NamingSource { ObjectName, MeshName, MaterialName }
     private NamingSource namingSource = NamingSource.ObjectName;
 
-    private bool mergeAlbedoAOToEmission = true;
+    private bool mergeAlbedoAOToEmission = false;
     private string mergedSuffix = "_AO_merged";
     private float aoOpacity = 1.0f;
 
