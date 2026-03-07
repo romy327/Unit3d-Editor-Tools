@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;//Auther    : RomyRMichael
+using UnityEditor;//Portfolio : https://romyrmichael.c1.biz/
 using System.IO;
 using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ public class AssignPBRTexturesV5 : EditorWindow
     private NamingSource namingSource = NamingSource.ObjectName;
 
     private bool mergeAlbedoAOToEmission = true;
-    private string mergedSuffix = "_shadow_merged";
+    private string mergedSuffix = "_AO_merged";
     private float aoOpacity = 1.0f;
 
     private int selectedBlendMode = 1;
