@@ -120,7 +120,7 @@ public class AssignPBRTexturesV5 : EditorWindow
 
             TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(path);
 
-            if (!importer.isReadable)
+            if (importer != null && !importer.isReadable)
             {
                 importer.isReadable = true;
                 importer.SaveAndReimport();
@@ -232,11 +232,22 @@ public class AssignPBRTexturesV5 : EditorWindow
             emission = AssetDatabase.LoadAssetAtPath<Texture2D>(save);
         }
 
+        // Updated Emission Logic
         if (emission)
         {
             mat.SetTexture("_EmissionMap", emission);
             mat.SetColor("_EmissionColor", Color.white);
+
+            // This enables the emission keyword for the shader
             mat.EnableKeyword("_EMISSION");
+
+            // This sets the Global Illumination flags so Unity knows the emission is active
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
+        }
+        else
+        {
+            mat.DisableKeyword("_EMISSION");
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
         }
 
         EditorUtility.SetDirty(mat);
@@ -270,6 +281,7 @@ public class AssignPBRTexturesV5 : EditorWindow
 
         for (int i = 0; i < a.Length; i++)
         {
+            // Blend logic - simplified to Lerp based on your request
             Color c = Color.Lerp(a[i], a[i] * b[i], aoOpacity);
             r[i] = new Color(c.r, c.g, c.b, a[i].a);
         }
