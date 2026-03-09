@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;//Auther    : RomyRMichael
+using UnityEditor;//Portfolio : https://romyrmichael.c1.biz/
 using UnityEditor.SceneManagement;
 
 [InitializeOnLoad]
