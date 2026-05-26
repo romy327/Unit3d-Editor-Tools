@@ -1,9 +1,34 @@
 fileFormatVersion: 2
-guid: b1ac04515c4b72347a1c50e7149cd44b
+guid: b2517045acb9901468e07ce42b2f998a
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body_Red
+    second: {fileID: 2100000, guid: 57ad436550019d94a91eb83a702403a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PlateSupport
+    second: {fileID: 2100000, guid: 62cfe3f68c329834aaa244bdb10c1ba3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TopAndBottomRings_
+    second: {fileID: 2100000, guid: b4831dca4f88e504b96de34db4bd3234, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ValveCap_
+    second: {fileID: 2100000, guid: deaf866f539ffa447af2e70043aa041b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Valve_
+    second: {fileID: 2100000, guid: 83493b956feecae49aecd4d62c3f50c9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -30,7 +55,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -46,7 +71,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
